@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<title>Generador de ruts chilenos validos</title>
+<meta name="title" content="Generador de ruts chilenos validos" />
+<meta name="keywords" content="rut chileno valido, rut, generador, chile, run" />
+<meta name="description" content="Generador de ruts chilenos validos" />
+<meta name="category" content="Tecnología" />
+<meta name="language" content="es" />
+<meta name="identifier-url" content="http://joaquinnunez.cl/jQueryRutPlugin/generate.html" />
+<meta name="rating" content="General" />
+<meta name="author" content="joaquinnunez.cl" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<meta name="resource-type" content="document" />
+<meta name="robots" content="all" />
+
+<style>
+<!--
+body {
+color:#333333;
+font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+font-size:14px;
+}
+
+#footer {
+color:#777777;
+font-size:11px;
+line-height:16px;
+}
+-->
+</style>
+
+<script src="jquery.js" type="text/javascript"></script>
+<script src="jquery.Rut.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+<!--
+
+function generar()
+{
+  var numero_ruts = $('#numero_ruts').val();
+  $('div#ruts').html('');
+  for(var i=0;i<numero_ruts;i++)
+  {
+  	var num_aleatorio = Math.round(Math.random()*(25000000-5000000))+5000000;
+  	$('div#ruts').append('<p>'+num_aleatorio+'-'+$.Rut.getDigito(num_aleatorio+"")+'</p>');
+  }
+}
+
+$(document).ready(function(){
+generar();
+});
+
+//-->
+</script>
+</head>
+<body>
+<h1 style="text-align:center;">Generador de rut chileno validos</h1>
+<p style="text-align:center;">Este generador fue creado para desarrolladores, si lo usarás con otros propositos, es 100% tu responsabilidad.</p>
+<p style="text-align:center;">Generar <input id="numero_ruts" type="text" value="10" style="width:40px;" /> más! <input value="ahora!" type="button" onclick="generar(); return false;"/></p>
+<div id="ruts" style="text-align:center;"></div>
+<div id="footer" style="text-align:center;">
+ Powered by <a href="http://joaquinnunez.cl/jQueryRutPlugin/">jQueryRutPlugin</a> |
+ Created by <a href="http://joaquinnunez.cl/blog/">joaquinnunez.cl</a> |
+ Más generadores en <a href="http://joaquinnunez.cl/fp/">form populator</a>
+</div>
+</body>
+</html>

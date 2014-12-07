@@ -1,0 +1,526 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>jQuery Rut Plugin</title>
+
+<meta name="title" content="jQuery Rut Plugin" />
+<meta name="keywords" content="javascript, jquery plugin, rut, rut chileno, validar, formatear, validador, rut chileno, formateo" />
+<meta name="description" content="jQuery Rut es un sencillo plugin para formatear y validar el rut chileno. " />
+<meta name="author" content="joaquinnunez.cl" />
+<meta name="robots" content="follow,index" />
+
+<link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="flora.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="flora.tabs.css" media="screen" rel="stylesheet" type="text/css" />
+
+<script src="jquery.js" type="text/javascript"></script>
+<script src="jquery.Rut.js" type="text/javascript"></script>
+<script src="jquery.validate.js" type="text/javascript"></script>
+<script src="jquery-ui.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+// Demo 1
+$('#rut_demo_1').Rut();
+// Demo 2
+$('#rut_demo_2').Rut({
+  on_error: function(){ alert('Rut incorrecto'); }
+});
+// Demo 3
+$('#rut_demo_3, #rut_demo_4').Rut({
+  on_error: function(){ alert('Rut incorrecto'); },
+  on_success: function(){ alert('Rut correcto') }
+});
+// Demo 5
+$('#rut_demo_5').Rut({
+  on_error: function(){ alert('Rut incorrecto'); },
+  format_on: 'keyup'
+});
+// Demo 6
+$('#rut_demo_6').Rut({
+  validation: false,
+  format_on: 'keyup',
+  digito_verificador: '#digito_verificador_demo_6'
+});
+
+$('#rut_demo_7').Rut({
+  digito_verificador: '#digito_verificador_demo_7',
+  on_error: function(){ alert('Rut incorrecto'); }
+});
+
+$("#content > ul").tabs();
+});
+</script>
+
+<style>
+<!--
+
+table.api {
+border-collapse:collapse;
+border-spacing:0;
+width:100%;
+}
+
+table.api tbody tr.option {
+background: #E2EDF4 none repeat scroll 0 0;
+padding:4px;
+}
+
+table.api tbody tr.option td {
+padding:4px;
+}
+
+table.api tbody tr.example td div.example div.tabs-container pre {
+background:#F5F4EE none repeat scroll 0 0 !important;
+border:1px dotted #DDDDDD !important;
+color:#06263C !important;
+font-size:11px !important;
+line-height:1.6 !important;
+margin:0.8em 0 1.2em !important;
+padding:5px !important;
+}
+
+table.api tbody tr.example td div.example div.tabs-container {
+background:#FFFFFF none repeat scroll 0 0;
+border-top:1px solid #97A5B0;
+padding:1em 8px;
+}
+
+table.api tbody tr.example td div.example ul.tabs-nav {
+padding:1em 8px;
+}
+
+table.api tbody tr.example td div.example ul.tabs-nav li{
+border-left:1px solid #97A5B0;
+border-right:1px solid #97A5B0;
+border-top:1px solid #97A5B0;
+}
+
+table.api tbody tr td.desc {
+padding:1em 8px;
+}
+
+-->
+</style>
+
+</head>
+<body>
+<a href="https://github.com/joaquinnunez/jQuery-Rut-Plugin"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+<div id="main">
+	<div id="shadow">
+		<div id="content">
+			<ul>
+				<li><a href="#que_es">Que es?</a></li>
+				<li><a href="#doc">Documentación</a></li>
+				<li><a href="#int-jq-validation">Integración con jQuery Validation</a></li>
+				<li><a href="#download">Descarga</a></li>
+				<li><a href="#demo_div">Demos</a></li>
+			</ul>
+			<br />
+			<div id="que_es" class="example" style="display:none;">
+				<p>
+					jQuery Rut es un sencillo plugin para formatear y validar el rut chileno.
+				</p>
+				<p>
+					Es flexible, configurable y fácil de usar. Descargalo, mira los ejemplos, y empieza a disfrutar.
+				</p>
+				<p>  Testeado en firefox, ie6, ie7 y opera.</p>
+			</div>
+
+
+
+			<div id="doc" class="example" style="display:none;">
+				<h2>Cargando dependencias</h2>
+				<p>
+					Asegurate que jQuery esta cargado antes que Rut.
+				</p>
+				<div class="code">
+					<code> &lt;script src="jquery.js" type="text/javascript"&gt;&lt;/script&gt; <br />
+					 &lt;script src="jquery.Rut.js" type="text/javascript"&gt;&lt;/script&gt; </code>
+				</div>
+				<br />
+				<br />
+				<h2>Metodos del plugin</h2>
+				<br />
+				<h3> <strong class="selflink">Rut</strong>( <span class="optional">[</span>options<span class="optional">]</span> ) </h3>
+				<p>
+          options (opcional) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://docs.jquery.com/Types#Options">Options</a>
+        </p>
+        <p>Un conjunto de pares clave/valor para configurar el comportamiento. Todas las opciones son opcionales.</p>
+
+				<p style="background:#0F67A1 none repeat scroll 0 0;padding:5px 10px;color:#FFFFFF;">Opciones</p>
+
+<table class="api">
+	<tbody>
+
+    <tr class="option">
+      <th>on_error</th>
+      <td class="type"><a href="http://docs.jquery.com/Types#Callback">Callback</a></td>
+      <td class="default"><b>Default:</b> <span>function(){}</span></td>
+    </tr>
+    <tr>
+      <td colspan="3" class="desc">Callback llamado cuando el rut ingresado es incorrecto.</td>
+    </tr>
+    <tr class="example">
+      <td colspan="3">
+      <div class="example">
+      <ul class="tabs-nav">
+        <li class="tabs-selected"><span>Code</span></li>
+      </ul>
+      <div id="code" class="tabs-container">Muestra un alert diciendo que el rut es incorrecto.<br />
+      <pre><a href="http://docs.jquery.com/Core/%24" title="Core/$">$</a>("#rut").<strong class="selflink">Rut</strong>({
+   on_error: function(){ alert('El rut ingresado es incorrecto'); }
+})
+</pre>
+      <p />
+      </div>
+      </div>
+      </td>
+    </tr>
+
+		<tr class="option">
+			<th>on_success</th>
+			<td class="type"><a href="http://docs.jquery.com/Types#Callback">Callback</a></td>
+			<td class="default"><b>Default:</b> <span>function(){}</span></td>
+		</tr>
+		<tr>
+			<td colspan="3" class="desc">Callback llamado cuando el rut ingresado es correcto.</td>
+		</tr>
+		<tr class="example">
+			<td colspan="3">
+			<div class="example">
+			<ul class="tabs-nav">
+				<li class="tabs-selected"><span>Code</span></li>
+			</ul>
+			<div id="code" class="tabs-container">Muestra un alert diciendo que el rut es correcto.<br />
+			<pre><a href="http://docs.jquery.com/Core/%24" title="Core/$">$</a>("#rut").<strong class="selflink">Rut</strong>({
+   on_success: function(){ alert('El rut es correcto'); }
+})
+</pre>
+			<p />
+			</div>
+			</div>
+			</td>
+		</tr>
+
+    <tr class="option">
+      <th>digito_verificador</th>
+      <td class="type"><a href="http://docs.jquery.com/Types#Selector">Selector</a></td>
+      <td class="default"></td>
+    </tr>
+    <tr>
+      <td colspan="3" class="desc">Añade la opción de tener el digito verificador del rut en otro input.</td>
+    </tr>
+    <tr class="example">
+      <td colspan="3">
+      <div class="example">
+      <ul class="tabs-nav">
+        <li class="tabs-selected"><span>Code</span></li>
+      </ul>
+      <div id="code" class="tabs-container">El rut esta en el input #rut y el digito verificador en otro input #digito-verificador .<br />
+      <pre><a href="http://docs.jquery.com/Core/%24" title="Core/$">$</a>("#rut").<strong class="selflink">Rut</strong>({
+   digito_verificador: "#digito-verificador"
+})
+</pre>
+      <p />
+      </div>
+      </div>
+      </td>
+    </tr>
+
+
+    <tr class="option">
+      <th>validation</th>
+      <td class="type"><a href="http://docs.jquery.com/Types#Boolean">Boolean</a></td>
+      <td class="default"><b>Default:</b> <span>true</span></td>
+    </tr>
+    <tr>
+      <td colspan="3" class="desc">Añade la posibilidad de que no se efectué la validación del rut, para en casos en el que por ejemplo sólo se quiere formatear el rut.</td>
+    </tr>
+    <tr class="example">
+      <td colspan="3">
+      <div class="example">
+      <ul class="tabs-nav">
+        <li class="tabs-selected"><span>Code</span></li>
+      </ul>
+      <div id="code" class="tabs-container">En este caso no se efectuaría la validación.<br />
+      <pre><a href="http://docs.jquery.com/Core/%24" title="Core/$">$</a>("#rut").<strong class="selflink">Rut</strong>({
+   validation: false
+})
+</pre>
+      <p />
+      </div>
+      </div>
+      </td>
+    </tr>
+
+    <tr class="option">
+      <th>format</th>
+      <td class="type"><a href="http://docs.jquery.com/Types#Boolean">Boolean</a></td>
+      <td class="default"><b>Default:</b> <span>true</span></td>
+    </tr>
+    <tr>
+      <td colspan="3" class="desc">Añade la posibilidad de que no se efectué el formateo del rut, para en casos en el que por ejemplo sólo se quiere validar el rut.</td>
+    </tr>
+    <tr class="example">
+      <td colspan="3">
+      <div class="example">
+      <ul class="tabs-nav">
+        <li class="tabs-selected"><span>Code</span></li>
+      </ul>
+      <div id="code" class="tabs-container">En este caso no se efectuaría el formateo.<br />
+      <pre><a href="http://docs.jquery.com/Core/%24" title="Core/$">$</a>("#rut").<strong class="selflink">Rut</strong>({
+   format: false
+})
+</pre>
+      <p />
+      </div>
+      </div>
+      </td>
+    </tr>
+
+    <tr class="option">
+      <th>format_on</th>
+      <td class="type"><a href="http://docs.jquery.com/Types#Event">Event</a></td>
+      <td class="default"><b>Default:</b> <span>change</span></td>
+    </tr>
+    <tr>
+      <td colspan="3" class="desc">Añade la posibilidad de cambiar el evento que gatilla el formateo del rut. ( Lo he probado sólo con keyup y change) </td>
+    </tr>
+    <tr class="example">
+      <td colspan="3">
+      <div class="example">
+      <ul class="tabs-nav">
+        <li class="tabs-selected"><span>Code</span></li>
+      </ul>
+      <div id="code" class="tabs-container">En este caso el formateo del rut se efectuaría mientras lo voy escribiendo.<br />
+      <pre><a href="http://docs.jquery.com/Core/%24" title="Core/$">$</a>("#rut").<strong class="selflink">Rut</strong>({
+   format_on: 'keyup'
+})
+</pre>
+      <p />
+      </div>
+      </div>
+      </td>
+    </tr>
+
+	</tbody>
+</table>
+
+				<br />
+				<h2>Usando las funciones directamente</h2>
+				<p>
+					Es posible también utilizar las funciones directamente para mayor comodidad y utilidad.<br />
+					Las funciones disponibles son:
+				</p>
+				<h3>formatear(rut)</h3>
+				<p>
+					rut&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://docs.jquery.com/Types#String">String</a>
+				</p>
+				<br />
+				 Función que da formato al rut.
+				<div class="code">
+					<code>
+					$.Rut.formatear('123456789'); <br />
+					=> 12.345.678-9 </code>
+				</div>
+				<br />
+				<h3>quitarFormato(rut)</h3>
+				<p>
+					rut&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://docs.jquery.com/Types#String">String</a>
+				</p>
+				<br />
+				 Función que quita el formato al rut.
+				<div class="code">
+					<code>
+					$.Rut.quitarFormato('12.345.678-9'); <br />
+					=> 123456789 </code>
+				</div>
+				<br />
+				<h3>getDigito(rut)</h3>
+				<p>
+					rut&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://docs.jquery.com/Types#String">String</a>
+				</p>
+				<br />
+				 Función que obtiene el digito verificador del rut (el rut es pasado sin formato).
+				<div class="code">
+					<code>
+					$.Rut.getDigito('12995912'); <br />
+					=> 6 </code>
+				</div>
+				<br />
+				<h3>validar(rut)</h3>
+				<p>
+					rut&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://docs.jquery.com/Types#String">String</a>
+				</p>
+					<br />
+					 Función que valida si el rut es correcto.
+					<div class="code">
+						<code>
+						$.Rut.validar('12.995.912-6'); <br />
+						=> true </code>
+					</div>
+				</div>
+
+      <div id="int-jq-validation" class="example" style="display:none;">
+
+          <div id="demo" class="example">
+            <h2>Demo integración con <a href="http://bassistance.de/jquery-plugins/jquery-plugin-validation/">jQuery Validation Plugin</a></h2>
+            <p>
+
+              <script type="text/javascript">
+                $(document).ready(function(){
+
+                  $.validator.addMethod("rut", function(value, element) {
+                    return this.optional(element) || $.Rut.validar(value);
+                  }, "Este campo debe ser un rut valido.");
+
+                  $("#jq-validation").validate();
+
+                  $('#rut_demo_int').Rut({
+									  validation: false
+									});
+                });
+              </script>
+
+              <form id="jq-validation">
+              <p><label for="rut_demo_int">Rut:</label>&nbsp;<input id="rut_demo_int" type="text" name="rut_demo_int" class="required rut" />&nbsp;</p>
+              <p><input type="submit" value="Enviar" /></p>
+              </form>
+            </p>
+            <div class="code">
+              <h3>Código</h3>
+              <code>
+              <pre>
+$.validator.addMethod("rut", function(value, element) {
+  return this.optional(element) || $.Rut.validar(value);
+}, "Este campo debe ser un rut valido.");
+
+$("#jq-validation").validate();
+              </pre>
+              </code>
+              <code>&lt;input type="text" name="rut_demo_int" class="required rut"/&gt;</code>
+            </div>
+          </div>
+
+      </div>
+
+
+				<div id="download" class="example" style="display:none;">
+					<h2>Descarga</h2>
+					<p>
+						Requiere <a href="http://jquery.com/">jQuery 1.2.x o superior</a>.
+					</p>
+					<p>
+						<strong><a href="http://joaquinnunez.cl/jQueryRutPlugin/jquery.Rut.tar.gz">Descarga jQuery Rut Plugin</a></strong>
+					</p>
+				</div>
+				<div id="demo_div" style="display:none;">
+					<div id="demo" class="example">
+						<h2>Demo 1</h2>
+						<p>
+							<label for="rut_demo_1">Rut:</label>&nbsp;<input type="text" id="rut_demo_1" name="rut_demo_1" />
+						</p>
+						<div class="code">
+							<h3>Código</h3>
+							<code>$('#rut_demo_1').Rut();</code>
+							<code>&lt;input type="text" id="rut_demo_1" name="rut_demo_1" /&gt;</code>
+						</div>
+					</div>
+					<div class="example">
+						<h2>Demo 2</h2>
+						<p>
+							<label for="rut_demo_2">Rut:</label>&nbsp;<input type="text" id="rut_demo_2" name="rut_demo_2" />
+						</p>
+						<div class="code">
+							<h3>Código</h3>
+							<code>$('#rut_demo_2').Rut({<br />
+							&nbsp;&nbsp;on_error: function(){&nbsp;alert('Rut incorrecto'); }<br />
+							 });</code>
+							<code>&lt;input type="text" id="rut_demo_2" name="rut_demo_2" /&gt;</code>
+						</div>
+					</div>
+					<div class="example">
+						<h2>Demo 3</h2>
+						<p>
+							<label for="rut_demo_3">Rut:</label>&nbsp;<input type="text" id="rut_demo_3" name="rut_demo_3" />
+						</p>
+						<p>
+							<label for="rut_demo_4">Rut:</label>&nbsp;<input type="text" id="rut_demo_4" name="rut_demo_4" />
+						</p>
+						<div class="code">
+							<h3>Código</h3>
+							<code>$('#rut_demo_3, #rut_demo_4').Rut({<br />
+							&nbsp;&nbsp;on_error: function(){ alert('Rut incorrecto'); },<br />
+							&nbsp;&nbsp;on_success: function(){ alert('Rut correcto'); } <br />
+							});</code>
+							<code>
+							&lt;input type="text" id="rut_demo_3" name="rut_demo_3" /&gt; <br/>
+							&lt;input type="text" id="rut_demo_4" name="rut_demo_4" /&gt; </code>
+						</div>
+					</div>
+
+					<div class="example">
+            <h2>Demo 5</h2>
+            <p>
+              <label for="rut_demo_5">Rut:</label>&nbsp;<input type="text" id="rut_demo_5" name="rut_demo_5" />
+            </p>
+            <div class="code">
+              <h3>Código</h3>
+              <code>$('#rut_demo_5').Rut({<br />
+              &nbsp;&nbsp;on_error: function(){ alert('Rut incorrecto'); },<br />
+              &nbsp;&nbsp;format_on: 'keyup'<br />
+              });</code>
+              <code>
+              &lt;input type="text" id="rut_demo_5" name="rut_demo_5" /&gt;</code>
+            </div>
+          </div>
+
+          <div class="example">
+            <h2>Demo 6</h2>
+            <p>
+              <label for="rut_demo_6">Rut:</label>&nbsp;<input type="text" id="rut_demo_6" name="rut_demo_6" /> - <input type="text" id="digito_verificador_demo_6" name="digito_verificador_demo_6" size="1" />
+            </p>
+            <div class="code">
+              <h3>Código</h3>
+              <code>$('#rut_demo_6').Rut({<br />
+              &nbsp;&nbsp;validation: false,<br />
+              &nbsp;&nbsp;format_on: 'keyup',<br />
+              &nbsp;&nbsp;digito_verificador: '#digito_verificador_demo_6'<br />
+              });</code>
+              <code>
+              &lt;input type="text" id="rut_demo_6" name="rut_demo_6" /&gt; - <br /> &lt;input type="text" id="digito_verificador_demo_6" name="digito_verificador_demo_6" size="1" /&gt;</code>
+            </div>
+          </div>
+
+          <div class="example">
+            <h2>Demo 7</h2>
+            <p>
+              <label for="rut_demo_7">Rut:</label>&nbsp;<input type="text" id="rut_demo_7" name="rut_demo_7" /> - <input type="text" id="digito_verificador_demo_7" name="digito_verificador_demo_7" size="1" />
+            </p>
+            <div class="code">
+              <h3>Código</h3>
+              <code>$('#rut_demo_7').Rut({<br />
+              &nbsp;&nbsp;digito_verificador: '#digito_verificador_demo_7',<br />
+              &nbsp;&nbsp;on_error: function(){ alert('Rut incorrecto'); }<br />
+              });</code>
+              <code>
+              &lt;input type="text" id="rut_demo_7" name="rut_demo_7" /&gt; - <br /> &lt;input type="text" id="digito_verificador_demo_7" name="digito_verificador_demo_7" size="1" /&gt;</code>
+            </div>
+          </div>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<p class="right">
+				<a href="http://joaquinnunez.cl/blog/contacto/">Contacto</a>
+			</p>
+			<ul>
+				<li>Copyleft 2008 <a href="http://joaquinnunez.cl/">José Joaquín Núñez</a></li>
+				<li><a href="http://www.opensource.org/licenses/gpl-2.0.php">Licencia GPL</a></li>
+				<a href="generador-de-ruts-chilenos-validos.html">Generador de ruts chilenos validos</a>
+			</ul>
+		</div>
+	</div>
+	</body>
+	</html>
