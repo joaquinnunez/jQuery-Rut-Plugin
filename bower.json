@@ -1,0 +1,27 @@
+{
+  "name": "jquery-rut-plugin",
+  "version": "0.5",
+  "homepage": "https://github.com/joaquinnunez/jQuery-Rut-Plugin",
+  "authors": [
+    "Joaquin Nunez <contacto@joaquinnunez.cl>"
+  ],
+  "description": "jQuery Rut es un sencillo plugin para formatear y validar el rut chileno.",
+  "main": "jquery.Rut.js",
+  "keywords": [
+    "jquery",
+    "rut",
+    "chile",
+    "chileno"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": ">=1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/joaquinnunez/jQuery-Rut-Plugin"
+  },
+  "ignore": [
+    "site"
+  ]
+}
